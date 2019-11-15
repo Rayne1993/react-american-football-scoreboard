@@ -1,7 +1,7 @@
 //TODO: STEP 1 - Import the useState hook.
 
 import React from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import BottomRow from "./BottomRow";
 
@@ -9,6 +9,28 @@ function App() {
   //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
   const [homeCount, homeSetCount] = useState(0);
   const [awayCount, awaySetCount] = useState(0);
+
+  //Timer
+  let [sec, setSec] = useState(59);
+  let [min, setMin]= useState(19);
+  useEffect(() => {
+    const timeOut = setTimeout (() => {
+      setSec(sec - 1);
+      if (sec < 1) {
+        setSec(59);
+        setMin(min - 1);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeOut);
+    }
+  }, [sec, min]);
+
+//reset
+  function refresh() {
+    window.location.reload(false);
+  }
+
   return (
     <div className="container">
       <section className="scoreboard">
@@ -20,7 +42,7 @@ function App() {
 
             <div className="home__score">{homeCount}</div>
           </div>
-          <div className="timer">00:03</div>
+          <div className="timer">{min}:{sec}</div>
           <div className="away">
             <h2 className="away__name">Tigers</h2>
             <div className="away__score">{awayCount}</div>
@@ -38,6 +60,7 @@ function App() {
           <button className="awayButtons__touchdown" onClick={() => {awaySetCount(awayCount + 7);}}>Away Touchdown</button>
           <button className="awayButtons__fieldGoal" onClick={() => {awaySetCount(awayCount + 3)}}>Away Field Goal</button>
         </div>
+        <button className="reset" style={{borderRadius:'5px', color:'red'}} onClick={refresh}>Reset</button>
       </section>
     </div>
   );
