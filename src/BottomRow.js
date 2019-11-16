@@ -7,7 +7,7 @@ const BottomRow = () => {
   const [togo, setTogo] = useState(0);
   const [down, setDown] = useState(0);
 
-    const quarterCount = event => {
+    const quarterCount = props => {
       setCount( count + 1)
       if (count > 3) {
         setCount(0)
@@ -35,6 +35,13 @@ const BottomRow = () => {
       }
     };
 
+    function reset() {
+      setDown(0);
+      setTogo(0);
+      setBall(0);
+      setCount(0);
+    }
+
   return (
     <div className="bottomRow">
       <div className="down">
@@ -57,6 +64,7 @@ const BottomRow = () => {
         <div className="quarter__value">{count}</div>
         <button className="quarterButton" style={{background:'black', marginTop:'20px', borderRadius:'5px'}} onClick={quarterCount}>Quarter</button>
       </div>
+      <button className="reset" style={{color:'red', height:'100px', background:'black', marginTop:'20px', borderRadius:'5px'}} onClick={reset}>Reset</button>
     </div>
   );
 };

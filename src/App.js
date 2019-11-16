@@ -12,7 +12,7 @@ function App() {
 
   //Timer
   let [sec, setSec] = useState(59);
-  let [min, setMin]= useState(19);
+  let [min, setMin]= useState(14);
   useEffect(() => {
     const timeOut = setTimeout (() => {
       setSec(sec - 1);
@@ -27,6 +27,11 @@ function App() {
   }, [sec, min]);
 
 //reset
+  function resetScore() {
+    homeSetCount(0);
+    awaySetCount(0);
+  }
+
   function refresh() {
     window.location.reload(false);
   }
@@ -60,7 +65,8 @@ function App() {
           <button className="awayButtons__touchdown" onClick={() => {awaySetCount(awayCount + 7);}}>Away Touchdown</button>
           <button className="awayButtons__fieldGoal" onClick={() => {awaySetCount(awayCount + 3)}}>Away Field Goal</button>
         </div>
-        <button className="reset" style={{borderRadius:'5px', color:'red'}} onClick={refresh}>Reset</button>
+        <button className="resetScore" style={{borderRadius:'5px', color:'red'}} onClick={resetScore}>Reset Score</button>
+        <button className="refresh" style={{borderRadius:'5px', color:'red', marginLeft:'10px'}} onClick={refresh}>Reset All</button>
       </section>
     </div>
   );
